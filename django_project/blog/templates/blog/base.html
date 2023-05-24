@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'blog/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-8uL1H1XK6u2+0dGWv+7W+m9h0Wv+uY5b7pD3D2YJ3DnJfZ3XsOJk9zQY7u9M94qN9XqKv0Xl3J7s4eDyTJ3l5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     {% if title %}
         <title>Django Blog - {{ title }}</title>
@@ -34,9 +35,9 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               {% if user.is_authenticated %} 
-                  <a class="nav-item nav-link" href="{% url 'post-create' %}">New post</a>
+                  <a class="nav-item nav-link" href="{% url 'post-create' %}"><i class="fas fa-plus" style="color:white;"></i> New post</a>
                   <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                  <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                  <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt" style="color:white;"></i> Logout</a>
               {% else %}
                   <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                   <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>

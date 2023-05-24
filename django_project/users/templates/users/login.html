@@ -1,7 +1,5 @@
 {% extends "blog/base.html" %}
-
 {% load crispy_forms_tags %}
-
 {% block content %}
     <div class="content-section">
         <form method="POST">
@@ -13,6 +11,9 @@
             <div class="form-group">
                 <button class="btn btn-outline-info" type="submit">Login</button>
             </div>
+            <small class="text-muted ml-2">
+                <a href="{% url 'password_reset' %}">Forgot password?</a>
+            </small>
         </form>
         <div class="border-top pt-3">
             <small class="text-muted">
