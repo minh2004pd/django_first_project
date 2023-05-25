@@ -16,6 +16,12 @@ margin: 0;
 background-color: #5f788a;
 }
 
+.custom-class {
+  max-width: 800px;
+  max-height: 800px;
+  border: 1px solid black;
+}
+
 .site-header .navbar-nav .nav-link {
 color: #cbd5db;
 }

@@ -10,6 +10,11 @@
             </div>
             <h2><a class="article-title" href="{%url 'post-detail' post.id%}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>
+            <div class="article-img-wrapper">
+               {% if post.imagePost and post.imagePost.url != '/media/default.jpg' %}
+                  <img src="{{ post.imagePost.url }}" alt="Post Image" class="custom-class" style="max-width: 500px; max-height: 500px;">
+               {% endif %}
+            </div>
           </div>
         </article>
     {% endfor %}

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from .form import PostForm
 
 def home(request):
     context= {
@@ -37,7 +38,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields=['title','content']
+    form_class = PostForm
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -45,7 +46,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields=['title','content']
+    form_class = PostForm
 
     def form_valid(self,form):
         form.instance.author = self.request.user
