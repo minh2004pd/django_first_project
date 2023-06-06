@@ -9,7 +9,7 @@ class Post(models.Model):
     content = models.TextField()
     date_posted = models.DateTimeField(default = timezone.now())
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    imagePost = models.ImageField(default='default.jpg',upload_to='profile_pics')
+    imagePost = models.ImageField(default='default.jpg',upload_to='post_pics')
     
     def __str__(self):
         return self.title
@@ -22,8 +22,8 @@ class Post(models.Model):
 
         imagePost = Image.open(self.imagePost.path)
 
-        if imagePost.height > 300 and imagePost.width > 300:
-            output_size = (100,100)
+        if imagePost.height > 0 and imagePost.width > 0:
+            output_size = (500,500)
             imagePost.thumbnail(output_size)
             imagePost.save(self.imagePost.path)
     

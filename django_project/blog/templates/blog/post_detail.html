@@ -17,7 +17,7 @@
         <p class="article-content">{{ object.content }}</p>
         <div class="article-img-wrapper">
             {% if post.imagePost and post.imagePost.url != '/media/default.jpg' %}
-                <img src="{{ post.imagePost.url }}" alt="Post Image" class="custom-class" style="max-width: 500px; max-height: 500px;">
+              <a href="{%url 'post-detail' post.id%}" ><img src="{{ post.imagePost.url }}" id="image" alt="Post Image" class="article-img custom-class img-fluid rounded mx-auto d-block" style="max-width: 500px; max-height: 500px;"></a>
             {% endif %}
         </div>
         </div>

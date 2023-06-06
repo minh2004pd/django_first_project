@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from .form import PostForm
 
+
 def home(request):
     context= {
         'posts': Post.objects.all()
@@ -14,15 +15,15 @@ def home(request):
     print(request)
     return render(request, 'blog/home.html', context)
 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin,ListView):
     model = Post
     template_name = 'blog/home.html'
     context_object_name = 'posts'
     # sap xep lai thu tu bai post voi bai post moi o tren post cu o duoi
-    ordering = ['-date_posted']
+    ordering = ['-date_posted','-id']
     paginate_by = 5
 
-class UserPostListView(ListView):
+class UserPostListView(LoginRequiredMixin,ListView):
     model = Post
     template_name = 'blog/user_posts.html'
     context_object_name = 'posts'

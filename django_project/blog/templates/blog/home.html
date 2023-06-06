@@ -1,22 +1,26 @@
 {% extends "blog/base.html" %}
 {% block content %}
     {% for post in posts %}
+    <div class="row">
+      <div class="col-md-12">
         <article class="media content-section">
-          <img src="{{ post.author.profile.image.url }}" alt="IMG" class="rounded-circle article-img">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{%url 'user-posts' post.author.username%}">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-            </div>
-            <h2><a class="article-title" href="{%url 'post-detail' post.id%}">{{ post.title }}</a></h2>
-            <p class="article-content">{{ post.content }}</p>
-            <div class="article-img-wrapper">
-               {% if post.imagePost and post.imagePost.url != '/media/default.jpg' %}
-                  <img src="{{ post.imagePost.url }}" alt="Post Image" class="custom-class" style="max-width: 500px; max-height: 500px;">
-               {% endif %}
-            </div>
-          </div>
-        </article>
+           <img src="{{ post.author.profile.image.url }}" alt="IMG" class="rounded-circle article-img">
+           <div class="media-body">
+             <div class="article-metadata">
+               <a class="mr-2" href="{%url 'user-posts' post.author.username%}">{{ post.author }}</a>
+               <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+             </div>
+             <h2><a class="article-title" href="{%url 'post-detail' post.id%}">{{ post.title }}</a></h2>
+             <p class="article-content">{{ post.content }}</p>
+             <div class="article-img-wrapper">
+                {% if post.imagePost and post.imagePost.url != '/media/default.jpg' %}
+                <a href="{%url 'post-detail' post.id%}" ><img src="{{ post.imagePost.url }}" id="image" alt="Post Image" class="article-img custom-class img-fluid rounded mx-auto d-block" style="max-width: 500px; max-height: 500px; object-fit: cover;"></a>
+                {% endif %}
+             </div>
+           </div>
+         </article>
+      </div>
+    </div>
     {% endfor %}
     {% if is_paginated %}
 
