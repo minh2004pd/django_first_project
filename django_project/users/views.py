@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -10,13 +12,26 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
+            email = form.cleaned_data.get('email')
+            if User.objects.filter(email=email).exists():
+                messages.error(request, 'Email already registered.')
+                return redirect('register')
             form.save()
-            username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
             return redirect('login')
+        else:
+            messages.error(request, 'Registration failed. Please correct the errors below.')
+
     else:
         form = UserRegisterForm()
-        return render(request, 'users/register.html', {'form':form})
+    return render(request, 'users/register.html', {'form':form})
+
+class MyLoginView(LoginView):
+    template_name = 'login.html'
+
+    def form_invalid(self,form):
+        messages.error(self.request,'Login failed!')
+        return super().form_invalid(form)
 
 @login_required
 def profile(request):

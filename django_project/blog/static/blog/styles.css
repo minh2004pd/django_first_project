@@ -50,7 +50,19 @@
   border-radius: 3px;
   margin-bottom: 20px;
   }
-
+  .article-content {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .article-content a {
+    color: #0077c0;
+    text-decoration: none;
+  }
+  .article-content a:hover {
+    text-decoration: underline;
+  }
+  
   .article-title {
   color: #444444;
   }
