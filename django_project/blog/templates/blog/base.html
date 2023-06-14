@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
     <link rel="stylesheet" type="" href="{% static 'blog/styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-8uL1H1XK6u2+0dGWv+7W+m9h0Wv+uY5b7pD3D2YJ3DnJfZ3XsOJk9zQY7u9M94qN9XqKv0Xl3J7s4eDyTJ3l5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 
     {% if title %}
         <title>Django Blog - {{ title }}</title>
@@ -22,26 +22,45 @@
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Django Blog</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
-              <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+          <div class="left">
+            <div class="logo">
+                
             </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              {% if user.is_authenticated %}
-                  <a class="nav-item nav-link" href="{% url 'post-create' %}"><i class="fas fa-plus" style="color:white;"></i> New post</a>
-                  <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                  <a class="nav-item nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt" style="color:white;"></i> Logout</a>
-              {% else %}
-                  <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                  <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
-              {% endif %}
+
+            <div class="search_bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="search" class="">
             </div>
+          </div>
+
+          <div class="center d-md-block d-none">
+              <a href="{% url 'blog-home' %}"><i class="fas fa-home"></i></a>
+              <i class="fas fa-tv"></i>
+              <i class="fas fa-store"></i>
+              <i class="fas fa-users"></i>
+          </div>
+
+          <div class="right">
+              <i class="fas fa-list-ul"></i>
+              <i class="fab fa-facebook-messenger"></i>
+              <i class="fas fa-bell"></i>
+              <div class="profile-container">
+                <img src="{{ user.profile.image.url }}" alt="img" class="profile-image">
+                <div class="dropdown-menu">
+                  <a href="{% url 'post-create' %}"><div style="display: flex;">
+                    <i class="fa-solid fa-plus" style="background-color: #f9f9f9;"></i>
+                    New post
+                  </div></a>
+                  <a href="{% url 'profile' %}"><div style="display: flex;">
+                    <i class="fa-solid fa-user" style="background-color: #f9f9f9;"></i>
+                    Profile
+                  </div></a>
+                  <a href="{% url 'logout' %}"><div style="display: flex;">
+                    <i class="fa-solid fa-right-from-bracket" style="background-color: #f9f9f9;"></i>
+                    Logout
+                  </div></a>
+                </div>
+              </div>
           </div>
         </div>
       </nav>

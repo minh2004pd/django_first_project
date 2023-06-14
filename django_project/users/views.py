@@ -17,7 +17,7 @@ def register(request):
                 messages.error(request, 'Email already registered.')
                 return redirect('register')
             form.save()
-            messages.success(request, f'Account created for {username}!')
+            messages.success(request, f'Account created success!')
             return redirect('login')
         else:
             messages.error(request, 'Registration failed. Please correct the errors below.')
