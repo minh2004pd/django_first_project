@@ -1,28 +1,66 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <title>Room</title>
 </head>
 <body>
-    <textarea name="" id="chat-log" cols="100" rows="20"></textarea><br>
-    <input type="text" id="chat-message-input" size="100"><br>
-    <input type="button" id="chat-message-submit" value="Send">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-6">
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1" class="h4 pt-5">Chatroom</label>
+                    <textarea class="form-control" id="chat-log" rows="10"></textarea><br>
+                </div>
+                <div class="form-group">
+                    <input class="form-control" id="chat-message-input" type="text"></br>
+                </div>
+                <input class="btn btn-secondary btn-lg btn-block" id="chat-message-submit" type="button" value="Send">
+            </form>
+        </div>
+    </div>
+  </div>
 </body>
+<script src="{% static 'reconnecting-websocket.js' %}"></script>
 <script>
     var roomName = {{ room_name_json }};
-    var chatSocket = new WebSocket(
+    var username = {{ username }};
+    var chatSocket = new ReconnectingWebSocket(
         'ws://' + window.location.host +
         '/ws/chat/' + roomName + '/'
     );
 
-    chatSocket.onmessage = function(e){
+    chatSocket.onopen = function(e) {
+      fetchMessages();
+    }
+
+    function fetchMessages() {
+      chatSocket.send(JSON.stringify({
+        'command': 'fetch_messages',
+      }));
+    }
+
+    chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
-        var message = data['message'];
-        document.querySelector("#chat-log").value += (message + '\n');
+        if (data['command'] === 'fetch_messages') {
+          for (let i=data['messages'].length - 1; i>=0; i--) {
+            createMessage(data['messages'][i]);
+          }
+        } else if (data['command'] === 'new_message'){
+          createMessage(data['message']);
+        }
     };
 
+    function createMessage(data) {
+      var author = data['author'];
+      var content = data['content'];
+      document.querySelector('#chat-log').value += (author + ':' + ' ' + content + '\n');
+    }
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
     };
@@ -38,7 +76,9 @@
         var messageInputDom = document.querySelector("#chat-message-input");
         var message = messageInputDom.value;
         chatSocket.send(JSON.stringify({
-            'message':message
+            'command': 'new_message',
+            'message':message,
+            'from': username,
         }));
 
         messageInputDom.value = "";
